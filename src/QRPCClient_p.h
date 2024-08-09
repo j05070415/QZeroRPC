@@ -32,9 +32,6 @@ T QRPCClient::sendSync(const QString& funcname,
         if (!QMetaType::load(respds, type, &response))
             qDebug() << "unserial failed," << QMetaType::typeName(type);
 
-        //        static int counter = 0;
-        //        qDebug() << "cli:" << ++counter << response;
-
         loop.exit(0);
     });
     QTimer timer;
@@ -48,7 +45,7 @@ T QRPCClient::sendSync(const QString& funcname,
     //超时3s
     timer.start(3000);
     if (loop.exec() != 0)
-        return {};
+        qDebug() << "time out, no response!";
 
     disconnect(this, &QRPCClient::response, 0, 0);
 
